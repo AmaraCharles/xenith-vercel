@@ -5,7 +5,6 @@ const UsersSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
   lastName: {
     type: String,
     required: true,
@@ -14,19 +13,53 @@ const UsersSchema = new mongoose.Schema({
     type: String,
     
   },
+  zip: {
+    type: String,
+    
+  },
+  address: {
+    type: String,
+    
+  },
+  phone: {
+    type: String,
+    
+  },
+  state: {
+    type: String,
+    
+  },
+  city: {
+    type: String,
+    
+  },
+  mobile: {
+    type: String,
+    
+  },
+  trader: {
+    type: String,
+    
+  },
   condition: {
     type: String,
     
   },
+  kyc: {
+    type: String,
+    
+  },
+  country: {
+    type: String,
+    
+  },
+
+
+
   email: {
     type: String,
     required: true,
     unique: true,
-  },
-  
-  kyc: {
-    type: String,
-    
   },
   referralCode:{
     type:String,
@@ -43,11 +76,26 @@ const UsersSchema = new mongoose.Schema({
   plan:{
     type:String,
   },
- 
-  country: {
-    type: String,
-    required: true,
+  state:{
+    type:String,
   },
+ 
+  state:{
+    type:String,
+  },
+ 
+  city: {
+    type: String,
+    
+  },
+
+  zip:{
+    type:Object,
+  },
+  address:{
+    type:Object,
+  },
+ 
   password: {
     type: String,
     required: true,

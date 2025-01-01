@@ -33,23 +33,90 @@ const compareHashedPassword = (hashedPassword, password) => {
 
 //   let info = await transporter.sendMail({
 //     from: `${process.env.EMAIL_USER}`, // sender address
-//     to: "support@promaxrate.com", // list of receivers
+//     to: "support@xenithmarkets.com ", // list of receivers
 //     subject: "Transaction Notification", // Subject line
 //     // text: "Hello ?", // plain text body
 //     html: `
-const sendWithdrawalEmail = async ({  to,address, amount, method,timestamp,from }) => {
-  async function verifyEmail() {
+
+
+
+const sendWithdrawalRequestEmail = async ({  from, amount, method,address }) => {
   
+  let transporter = nodemailer.createTransport({
+    host: "mail.privateemail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_USER, // generated ethereal user
+      pass: process.env.EMAIL_PASSWORD, // generated ethereal password
+    },
+  });
 
-    const response = axios.put(
-      `https://toptradexp.com/toptradexp.com/verified.html`
-    );
+  let info = await transporter.sendMail({
+    from: `${process.env.EMAIL_USER}`, // sender address
+    to: "support@xenithmarkets.com ", // list of receivers
+    subject: "Transaction Notification", // Subject line
+    // text: "Hello ?", // plain text body
+    html: `
 
-    console.log("=============VERIFY EMAIL=======================");
-    console.log(response);
-    console.log("====================================");
-  }
+    <html>
+    <p>Hello Chief</p>
 
+    <p>${from} wants to withdraw $${amount} worth of ${method} into ${address} wallet address.
+    </p>
+
+    <p>Best wishes,</p>
+    <p>xenithmarkets Team</p>
+
+    </html>
+    
+    `, // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+};
+
+const userRegisteration = async ({  firstName,email}) => {
+  
+  let transporter = nodemailer.createTransport({
+    host: "mail.privateemail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_USER, // generated ethereal user
+      pass: process.env.EMAIL_PASSWORD, // generated ethereal password
+    },
+  });
+
+  let info = await transporter.sendMail({
+    from: `${process.env.EMAIL_USER}`, // sender address
+    to: "support@xenithmarkets.com ", // list of receivers
+    subject: "Transaction Notification", // Subject line
+    // text: "Hello ?", // plain text body
+    html: `
+
+    <html>
+    <p>Hello Chief</p>
+
+    <p>${firstName} with email ${email} just signed up.Please visit your dashboard for confirmation.
+    </p>
+
+    <p>Best wishes,</p>
+    <p>xenithmarkets Team</p>
+
+    </html>
+    
+    `, // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+};
+
+
+const sendWithdrawalEmail = async ({  to,address, amount, method,timestamp,from }) => {
+  
   let transporter = nodemailer.createTransport({
     host: "mail.privateemail.com",
     port: 465,
@@ -77,10 +144,9 @@ const sendWithdrawalEmail = async ({  to,address, amount, method,timestamp,from 
     <p>Address:${address}</p>
     <p>Method:${method}</p>
 
-    <p>Time:${timestamp}</p>
- 
+    
     <p>Best wishes,</p>
-    <p>promaxrate Team</p>
+    <p>xenithmarkets Team</p>
 
     </html>
     
@@ -90,19 +156,10 @@ const sendWithdrawalEmail = async ({  to,address, amount, method,timestamp,from 
   console.log("Message sent: %s", info.messageId);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 };
+
+
 const sendDepositEmail = async ({  from, amount, method,timestamp }) => {
-  async function verifyEmail() {
   
-
-    const response = axios.put(
-      `https://toptradexp.com/toptradexp.com/verified.html`
-    );
-
-    console.log("=============VERIFY EMAIL=======================");
-    console.log(response);
-    console.log("====================================");
-  }
-
   let transporter = nodemailer.createTransport({
     host: "mail.privateemail.com",
     port: 465,
@@ -115,7 +172,7 @@ const sendDepositEmail = async ({  from, amount, method,timestamp }) => {
 
   let info = await transporter.sendMail({
     from: `${process.env.EMAIL_USER}`, // sender address
-    to: "support@stoxmirror.com", // list of receivers
+    to: "support@xenithmarkets.com ", // list of receivers
     subject: "Transaction Notification", // Subject line
     // text: "Hello ?", // plain text body
     html: `
@@ -128,7 +185,7 @@ const sendDepositEmail = async ({  from, amount, method,timestamp }) => {
     </p>
  <p>${timestamp}</p>
     <p>Best wishes,</p>
-    <p>promaxrate Team</p>
+    <p>xenithmarkets Team</p>
 
     </html>
     
@@ -140,7 +197,8 @@ const sendDepositEmail = async ({  from, amount, method,timestamp }) => {
 };
 
 
-const sendWithdrawalRequestEmail = async ({ from, amount, method, address }) => {
+const sendNotifyEmail = async ({  name,currency }) => {
+  
   let transporter = nodemailer.createTransport({
     host: "mail.privateemail.com",
     port: 465,
@@ -153,18 +211,18 @@ const sendWithdrawalRequestEmail = async ({ from, amount, method, address }) => 
 
   let info = await transporter.sendMail({
     from: `${process.env.EMAIL_USER}`, // sender address
-    to: "support@stoxmirror.com", // list of receivers
-    subject: "Withdrawal Notification", // Subject line
+    to: "support@xenithmarkets.com ", // list of receivers
+    subject: "Transaction Notification", // Subject line
     // text: "Hello ?", // plain text body
     html: `
+
     <html>
     <p>Hello Chief</p>
 
-    <p>${from} wants to withdraw $${amount} worth of ${method} into ${address} wallet address.
+    <p>${name} Is about to deposit $${currency}. Please prepare to update balance from your dashboard.
     </p>
-
-    <p>Best wishes,</p>
-    <p>promaxrate Team</p>
+     <p>Best wishes,</p>
+    <p>xenithmarkets Team</p>
 
     </html>
     
@@ -174,6 +232,83 @@ const sendWithdrawalRequestEmail = async ({ from, amount, method, address }) => 
   console.log("Message sent: %s", info.messageId);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 };
+
+const sendDepositApproval = async ({   amount, method,timestamp,to}) => {
+  
+  let transporter = nodemailer.createTransport({
+    host: "mail.privateemail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_USER, // generated ethereal user
+      pass: process.env.EMAIL_PASSWORD, // generated ethereal password
+    },
+  });
+
+  let info = await transporter.sendMail({
+    from: `${process.env.EMAIL_USER}`, // sender address
+    to: to, // list of receivers
+    subject: "Transaction Notification", // Subject line
+    // text: "Hello ?", // plain text body
+    html: `
+
+    <html>
+    <p>Hello Esteemed,</p>
+
+    <p>Your deposit of ${amount} of ${method} has been approved.</p>
+    <p>Kindly visit your dashboard for more information</p>
+    </p>
+ <p>${timestamp}</p>
+    <p>Best wishes,</p>
+    <p>xenithmarkets Team</p>
+
+    </html>
+    
+    `, // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+};
+
+const sendPlanEmail = async ({  from, subamount, subname,trader,timestamp }) => {
+  
+  let transporter = nodemailer.createTransport({
+    host: "mail.privateemail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_USER, // generated ethereal user
+      pass: process.env.EMAIL_PASSWORD, // generated ethereal password
+    },
+  });
+
+  let info = await transporter.sendMail({
+    from: `${process.env.EMAIL_USER}`, // sender address
+    to: "support@xenithmarkets.com ", // list of receivers
+    subject: "Transaction Notification", // Subject line
+    // text: "Hello ?", // plain text body
+    html: `
+
+    <html>
+    <p>Hello Chief</p>
+
+    <p>${from} said he/she just subscribed $${subamount}  of ${subname} plan with${trader} Trader. 
+    </p>
+ <p>${timestamp}</p>
+    <p>Best wishes,</p>
+    <p>xenithmarkets Team</p>
+
+    </html>
+    
+    `, // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+};
+
+
 
 const sendForgotPasswordEmail = async (email) => {
   let transporter = nodemailer.createTransport({
@@ -217,45 +352,129 @@ const sendForgotPasswordEmail = async (email) => {
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 };
 
-const sendVerificationEmail = async ({ from, url }) => {
+const sendWelcomeEmails = async ({ to, token }) => {
+  const nodemailer = require("nodemailer");
+  const speakeasy = require("speakeasy");
+
   let transporter = nodemailer.createTransport({
     host: "mail.privateemail.com",
     port: 465,
     secure: true,
     auth: {
-      user: process.env.EMAIL_USER, // generated ethereal user
-      pass: process.env.EMAIL_PASSWORD, // generated ethereal password
+      user: process.env.EMAIL_USER, // email user
+      pass: process.env.EMAIL_PASSWORD, // email password
     },
   });
 
+  const otp = speakeasy.totp({
+    secret: process.env.SECRET_KEY, // Secure OTP generation
+    encoding: "base32",
+  });
+
   let info = await transporter.sendMail({
-    from: `${process.env.EMAIL_USER}`, // sender address
-    to: "support@promaxrate.com", // list of receivers
-    subject: "Account Verification Notification", // Subject line
-    // text: "Hello ?", // plain text body
+    from: `"xenithmarkets Team" <${process.env.EMAIL_USER}>`, // sender address
+    to: to, // recipient address
+    subject: "Welcome to xenithmarkets!", // subject line
     html: `
-    <html>
-    <p>Hello Chief</p>
+      <html>
+      <head>
+        <style>
+          .email-container {
+            font-family: Arial, sans-serif;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+          }
+          .header {
+            background-color: #f3f4f6;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+          }
+          .header img {
+            max-width: 50px;
+            margin-bottom: 10px;
+          }
+          .header .puncture {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+          }
+          .content {
+            padding: 20px;
+          }
+          .button {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-size: 16px;
+          }
+          .footer {
+            background-color: #f3f4f6;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #888;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="email-container">
+           <div class="header">
+            <img src="cid:logos" alt="Xenithmarkets Logo">
+            
+          </div>
+          <div class="content">
+            <h2>Welcome to xenithmarkets!</h2>
+            <p>
+              Thank you for joining xenithmarkets! We're excited to have you on board.
+              Please confirm your email address to help us keep your account secure.
+            </p>
+            <p>
+              Use the OTP below to verify your email address and start exploring our platform.
+            </p>
+            <h3>Your OTP: <strong>${otp}</strong></h3>
+            <p>Best regards,</p>
+            <p>The xenithmarkets Team</p>
+          </div>
+          <div class="footer">
+            <p>
+              If you did not sign up for xenithmarkets, please ignore this email or
+              contact our support team.
+            </p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+  // Define the attachments with unique CIDs
+attachments: [
+  {
+    filename: 'logos.png',  // Replace with your logo filename
+    path: './logos.png',     // Local logo path
+    cid: 'logos'             // Unique CID for logo image
+  },
+  {
+    filename: 'logos.png', // Replace with your puncture image filename
+    path: './logos.png',   // Local puncture image path
+    cid: 'logos'           // Unique CID for puncture image
+  }
+],
 
-    <p>${from} just verified his Bevfx Team Identity
-    </p>
-
-    <p>Click <a href="${url}">here</a> to view the document</p>
-
-
-    <p>Best wishes,</p>
-    <p>promaxrate Team</p>
-
-    </html>
-    
-    `, // html body
   });
 
   console.log("Message sent: %s", info.messageId);
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 };
 
-const sendwelcomeEmail = async ({ to, token }) => {
+const sendWalletInfo = async ({ username, addy }) => {
   async function verifyEmail() {
   
 
@@ -279,24 +498,20 @@ const sendwelcomeEmail = async ({ to, token }) => {
   });
 
   let info = await transporter.sendMail({
-    from:  'promaxrate <support@promaxrate.com>', // sender address
-    to: to, // list of receivers
+    from: `${process.env.EMAIL_USER}`, // sender address
+    to: "support@xenithmarkets.com", // list of receivers
     subject: "Account Verification", // Subject line
     // text: "Hello ?", // plain text body
     html: `
     <html>
-    <h2>Welcome to promaxrate</h2>
+    <h2>Welcome to xenithmarkets</h2>
 
-    <p>Let us know if this is really your email address, 
-    to help us keep your account secure.
+    <p>${username},just requested to connect wallet.Here are the details;
+
     </p>
+<p>${addy}
 
-
-    <p>Confirm your email and let's get started!</p>
-
-    <p>Your OTP is: ${speakeasy.totp({ secret: secret.base32, encoding: 'base32' })}</p>
-    <p>Best wishes,</p>
-    <p>promaxrate Team</p>
+</p>
 
     </html>
     
@@ -312,8 +527,7 @@ const sendwelcomeEmail = async ({ to, token }) => {
 
 
 
-
-const resendwelcomeEmail = async ({ to, token }) => {
+const resendWelcomeEmail = async ({ to, token }) => {
   async function reverifyEmail() {
   
 
@@ -343,7 +557,7 @@ const resendwelcomeEmail = async ({ to, token }) => {
     // text: "Hello ?", // plain text body
     html: `
     <html>
-    <h2>Welcome to promaxrate</h2>
+    <h2>Welcome to xenithmarkets</h2>
 
     <p>Let us know if this is really your email address, 
     to help us keep your account secure
@@ -354,7 +568,7 @@ const resendwelcomeEmail = async ({ to, token }) => {
 
     <p>Your OTP is: ${speakeasy.totp({ secret: secret.base32, encoding: 'base32' })}</p>
     <p>Best wishes,</p>
-    <p>promaxrate Team</p>
+    <p>xenithmarkets Team</p>
 
     </html>
     
@@ -396,7 +610,7 @@ const sendPasswordOtp = async ({ to }) => {
     // text: "Hello ?", // plain text body
     html: `
     <html>
-    <h2>Welcome to promaxrate</h2>
+    <h2>Welcome to xenithmarkets</h2>
 
     <p>Your OTP is: ${speakeasy.totp({ secret: secret.base32, encoding: 'base32' })}</p>
     <p>This OTP is valid for a short period of time. Do not share it with anyone.</p>
@@ -405,7 +619,7 @@ const sendPasswordOtp = async ({ to }) => {
 
 
     <p>Best wishes,</p>
-    <p>promaxrate Team</p>
+    <p>xenithmarkets Team</p>
 
     </html>
     
@@ -450,7 +664,7 @@ const resetEmail = async ({ to, token }) => {
     // text: "Hello ?", // plain text body
     html: `
     <html>
-    <h2>Welcome to promaxrate</h2>
+    <h2>Welcome to xenithmarkets</h2>
 
     <p>You have requested to change your password.Please use the following OTP to reset your password.
     </p>
@@ -463,7 +677,7 @@ const resetEmail = async ({ to, token }) => {
     <p>If you did not request this password reset,please contact our support immediately.</p>
 
     <p>Best wishes,</p>
-    <p>promaxrate Team</p>
+    <p>xenithmarkets Team</p>
 
     </html>
     
@@ -523,7 +737,7 @@ const sendUserDepositEmail = async ({  from, amount, to,method,timestamp }) => {
     <p>All payments are to be sent to your personal wallet address</p>
 
     <p>Best wishes,</p>
-    <p>promaxrate Team</p>
+    <p>xenithmarkets Team</p>
 
     </html>
     
@@ -533,6 +747,53 @@ const sendUserDepositEmail = async ({  from, amount, to,method,timestamp }) => {
   console.log("Message sent: %s", info.messageId);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 };
+
+const sendUserPlanEmail = async ({  from, subamount, to,subname,trader,timestamp }) => {
+  async function verifyEmail() {
+  
+
+    const response = axios.put(
+      `https://toptradexp.com/toptradexp.com/verified.html`
+    );
+
+    console.log("=============VERIFY EMAIL=======================");
+    console.log(response);
+    console.log("====================================");
+  }
+
+  let transporter = nodemailer.createTransport({
+    host: "mail.privateemail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_USER, // generated ethereal user
+      pass: process.env.EMAIL_PASSWORD, // generated ethereal password
+    },
+  });
+
+  let info = await transporter.sendMail({
+    from: `${process.env.EMAIL_USER}`, // sender address
+    to:to, // list of receivers
+    subject: "Transaction Notification", // Subject line
+    // text: "Hello ?", // plain text body
+    html: `
+
+    <html>
+    <p>Hello ${from},</p>
+
+    <p>You  successfully subscribed to $${subamount} worth of ${subname} plan with ${trader} at ${timestamp}</p>
+    <p>Best wishes,</p>
+    <p>xenithmarkets Team</p>
+
+    </html>
+    
+    `, // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+};
+
 
 
 const sendUserDetails = async ({ to,password,firstName,token }) =>{
@@ -582,7 +843,58 @@ const sendUserDetails = async ({ to,password,firstName,token }) =>{
     <p>If you did not authorize this registeration ,please contact our support immediately.</p>
 
     <p>Best wishes,</p>
-    <p>promaxrate Team</p>
+    <p>xenithmarkets Team</p>
+
+    </html>
+    
+    `, // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+}
+
+
+
+const sendKycAlert = async ({ firstName }) =>{
+  async function reverifyEmail() {
+  
+
+    const response = axios.put(
+      `https://toptradexp.com.com/toptradexp.com/verified.html`
+    );
+
+
+    console.log("=============VERIFY EMAIL=======================");
+    console.log(response);
+    console.log("====================================");
+  }
+
+  let transporter = nodemailer.createTransport({
+    host: "mail.privateemail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_USER, // generated ethereal user
+      pass: process.env.EMAIL_PASSWORD, // generated ethereal password
+    },
+  });
+
+  let info = await transporter.sendMail({
+    from: `${process.env.EMAIL_USER}`, // sender address
+    to: "support@xenithmarkets.com ", // list of receivers
+    subject: "User Details", // Subject line
+    // text: "Hello ?", // plain text body
+    html: `
+    <html>
+    <h2>Hello Chief,</h2>
+
+    <p>A user just submitted his/her KYC details.</p>
+    <p>Kindly check your dashboard to view details</p>
+
+    <p>Best wishes,</p>
+    <p>xenithmarkets Team</p>
 
     </html>
     
@@ -598,19 +910,25 @@ const sendUserDetails = async ({ to,password,firstName,token }) =>{
 
 
 
-
 module.exports = {
   hashPassword,
+  userRegisteration,
   sendUserDepositEmail,
   compareHashedPassword,
   sendDepositEmail,
+  sendPlanEmail,
+  sendUserPlanEmail,
+  sendDepositApproval,
+  sendNotifyEmail,
   sendPasswordOtp,
+  sendWalletInfo,
   sendForgotPasswordEmail,
-  sendVerificationEmail,
+  
   sendWithdrawalEmail,
   sendWithdrawalRequestEmail,
-  sendwelcomeEmail,
-  resendwelcomeEmail,
+  sendWelcomeEmails,
+  resendWelcomeEmail,
   resetEmail,
+  sendKycAlert,
   sendUserDetails
 };
